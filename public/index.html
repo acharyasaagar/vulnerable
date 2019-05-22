@@ -5,21 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Login</title>
   <style>
-    html {
-      font-size: 25px;
+    .fade-out {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 1s, opacity 0.5s linear;
     }
   </style>
-  <title>Vulnerable</title>
 </head>
 <body class="jumbotron">
-    <h1 class="display-1 text-center">Hello Hackers</h1>
-    <p class="text-center lead">And all the people living in the planet Earth</p>
-    <br>
-    <div class="m-5">
-        <p class="text-center">Welcome to the Vulnerable application</p>
-        <p class="text-center">This vulnerable application uses nodejs, expressjs, postgresql database</p>
-        <p class="text-center">Happy Hacking</p>
-    </div>
+  <h1 class=" display-4 text-center">Welcome to Hacker's Teashop</h1>
+  <div class="mt-5"></div>
+  <div class="row">
+    <form class="offset-sm-2 offset-lg-3 col-sm-8 col-lg-6" id="form-login" name="form-login">
+      <h3> Login as a customer.</h3>
+      <br><br>
+      <div 
+        class="alert alert-warning alert-dismissible show d-none"
+        id="emailPasswordValidationErrorAlert" 
+        role="alert">
+        <strong>Invalid email and password!</strong>
+        <br>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" id="btn-login">Login</button>
+      <br>
+      <p class="lead mt-2" >If you don't have an account <a href="/register">register</a> here.</p>
+        
+    </form>
+  </div>
+  <script>
+    window.addEventListener('load', function (e) {
+      const scriptElement = document.createElement('script')
+      scriptElement.setAttribute('src', 'index.js')
+      document.body.appendChild(scriptElement)
+    })
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
