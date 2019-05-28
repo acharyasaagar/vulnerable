@@ -43,9 +43,22 @@ async function isAuthenticated(req, res, next) {
   const tokenInDb = user.token
   if(tokenInDb === tokenInReq) {
     req.user = user
-    next()
+    return next()
   }
 }
+
+// async function isAuthenticatedAsAdmin(req, res, next) {
+//   if(!req.cookies.token) return res.status(401).json({ error: 'Unauthorized'}).end()
+//   const tokenInReq = req.cookies.token
+//   const userId = tokenInReq.split('.')[0]
+//   const user = await Customer.findByPk(userId)
+//   const tokenInDb = user.token
+//   if(tokenInDb === tokenInReq && user.isAdmin) {
+//     req.admin = user
+//     next()
+//   }
+// }
+
 
 async function logout(req, res) {
   try {
@@ -70,5 +83,6 @@ async function logout(req, res) {
 module.exports = {
   authenticateUser,
   isAuthenticated,
+  // isAuthenticatedAsAdmin,
   logout
 }

@@ -29,6 +29,10 @@ Customer.init({
   },
   token: {
     type: Sequelize.STRING,
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   }
 }, {
   sequelize
@@ -50,6 +54,14 @@ Item.init({
   },
   stock: {
     type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  imageURL: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  itemDescription: {
+    type: Sequelize.STRING,
     allowNull: false
   }
 }, {

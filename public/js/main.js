@@ -9,7 +9,7 @@
     })
     .then(res => {
       if(res.ok) {
-        window.location.replace('/')
+        window.location.replace('/static')
       } 
     })
   }

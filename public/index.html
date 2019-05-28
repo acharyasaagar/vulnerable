@@ -41,14 +41,15 @@
       </div>
       <button type="submit" class="btn btn-primary" id="btn-login">Login</button>
       <br>
-      <p class="lead mt-2" >If you don't have an account <a href="/register">register</a> here.</p>
+      <p class="lead mt-2" >If you don't have an account <a href="/static/register">register</a> here.</p>
         
     </form>
   </div>
   <script>
     window.addEventListener('load', function (e) {
       const scriptElement = document.createElement('script')
-      scriptElement.setAttribute('src', 'index.js')
+      scriptElement.setAttribute('src', 'http://localhost:3000/static/js/login.js')
+      scriptElement.setAttribute('type', 'text/javascript')
       document.body.appendChild(scriptElement)
     })
   </script>

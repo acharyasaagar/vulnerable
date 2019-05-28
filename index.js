@@ -3,13 +3,14 @@ const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const ejs = require('ejs')
+const path = require('path')
 require('dotenv').config()
 
 const router = require('./router')
 const models = require('./models')
 
-const { isAuthenticated } = require('./services/customer/authentication.service')
-
+const { isAuthenticated, isAuthenticatedAsAdmin } = require('./services/customer/authentication.service')
+const { getAllProducts } = require('./services/products/products.service')
 
 const { sequelize, Customer, Item, Transaction } = models
 
@@ -29,18 +30,39 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 app.set('view engine', 'ejs')
 
-// static routes that return html
-app.use('/auth', express.static(__dirname+'/public'))
-app.use('/register', express.static(__dirname+'/public'))
-// app.use('/products', isAuthenticated, express.static(__dirname+'/public/products'))
-app.use('/products', isAuthenticated, function(req, res) {
+// static routes
+app.use('/static', express.static('public'))
+
+app.use('/static/products', isAuthenticated, async function(req, res) {
   if (req.user) {
-    res.render('products')
+    try {
+      const products = await getAllProducts()
+      return res.render('products', { 
+        user: req.user,
+        products 
+      })
+    } catch(err) {
+      return res.status(500).json({
+        error: 'Internal Server Error',
+        message: err.message
+      }).end()
+    }
   }
 })
 
-app.use('/', express.static(__dirname+'/public'))
+// app.use('/static/admin', isAuthenticated, function(req, res) {
+//   if(req.admin) {
+//     res.render('admin',{ user: req.admin })
+//   }
+// })
 
 // express router with routes to post data and interact with database
 app.use(router)
 
+
+function nocache(req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+  res.header('Expires', '-1')
+  res.header('Pragma', 'no-cache')
+  next()
+}

@@ -24,3 +24,7 @@ npm install
 npm start
 
 ```
+
+## ACCESS to the project
+
+Project Access is available at http://localhost:3000/static

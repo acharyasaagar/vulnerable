@@ -1,18 +1,28 @@
 (function () {
-  const loginBtn = document.getElementById('btn-login')
+  const registerBtn = document.getElementById('btn-register')
 
-  loginBtn.addEventListener('click', handleLogin)
+  registerBtn.addEventListener('click', handleRegistration)
   
-  function handleLogin(e) {
+  function handleRegistration(e) {
     e.preventDefault()
     let payload = {
       email: document.getElementById('email').value,
-      password: document.getElementById('password').value
+      password: document.getElementById('password').value,
+      isAdmin: document.getElementById('adminCheck').checked || false
     }
     if ( !(validateEmail(payload.email) && validatePassword(payload.password))) {
-      return showInvalidCredentialsAlert()
+      const errorAlertElement = document.getElementById('emailPasswordValidationErrorAlert')
+      errorAlertElement.classList.remove('d-none')
+      setTimeout(function() {
+        errorAlertElement.classList.add('fade-out')
+      }, 2000)
+      setTimeout(function () {
+        errorAlertElement.classList.add('d-none')
+        errorAlertElement.classList.remove('fade-out')
+      }, 3000)
+      throw new Error('Invalid email and password')
     }
-    fetch('http://localhost:3000/auth', {
+    fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -22,14 +32,13 @@
     .then(res => res.json())
     .then(data => {
       if(data.data.token) {
-        window.location.assign('products')
+        window.location.replace('../products')
       } else {
         showInvalidCredentialsAlert()
       }
     })
     .catch(err => console.log(err))
   }
-
   function validateEmail(email) {
     var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(String(email).toLowerCase());
@@ -37,16 +46,5 @@
   function validatePassword (password) {
     const regex = /[a-zA-Z0-9]{6,30}/ 
     return regex.test(password)
-  }
-  function showInvalidCredentialsAlert () {
-    const errorAlertElement = document.getElementById('emailPasswordValidationErrorAlert')
-    errorAlertElement.classList.remove('d-none')
-    setTimeout(function() {
-      errorAlertElement.classList.add('fade-out')
-    }, 2000)
-    setTimeout(function () {
-      errorAlertElement.classList.add('d-none')
-      errorAlertElement.classList.remove('fade-out')
-    }, 3000)
   }
 }())

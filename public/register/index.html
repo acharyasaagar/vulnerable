@@ -34,13 +34,18 @@
       </div>
       <button type="submit" class="btn btn-primary" id="btn-register">Register</button>
       <br>
-      <p class="lead mt-2" >If you already have an account <a href="/">login</a> here.</p>
+      <div class="form-check invisible">
+        <input type="checkbox" class="form-check-input" id="adminCheck" disabled>
+        <label class="form-check-label" for="adminCheck">Signup as Admin</label>
+      </div>
+      <p class="lead mt-2" >If you already have an account <a href="/static/">login</a> here.</p>
     </form>
   </div>
   <script>
     window.addEventListener('load', function (e) {
       const scriptElement = document.createElement('script')
-      scriptElement.setAttribute('src', 'register.js')
+      scriptElement.setAttribute('src', 'http://localhost:3000/static/js/register.js')
+      scriptElement.setAttribute('type', 'text/javascript')
       document.body.appendChild(scriptElement)
     })
   </script>
