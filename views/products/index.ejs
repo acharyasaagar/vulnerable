@@ -1,32 +1,40 @@
 <% include ../partials/header %>
-<h6 class="text-center">WELCOME <small><%= user.email %></small></h6>
+<% if (user.isAdmin) { %>
+  <p class="text-center">
+    <br>
+    <button class="btn btn-primary btn-lg" disabled>ADD a new Product</button>
+    <br>
+  </p>
+<% } %>
+<h6 class="text-center">WELCOME <span id="user-email"><%= user.email %></span></h6>
 <div >
   <h1 class="mt-5 display-4 text-center">Products</h1>
 </div>
-<div class="container mt-5 d-flex" id="products" >
+<div class="container mt-5 d-sm-flex justify-content-around flex-sm-wrap flex-md-nowrap" id="products" >
   <% products.forEach(product => { %>
-    <div class="card" style="width: 18rem;" id="<%= product.id %>">
-        <img class="card-img-top" src="<%= product.name %>">
+    <div class="card m-3" id="<%= product.id %>">
+        <img class="card-img-top" src="<%= product.imageURL %>">
         <div class="card-body">
           <h5 class="card-title"> <%= product.name %> </h5>
-          <h6 class="card-subtitle mb-2 text-muted"> <%= product.price %> </h6>
-          <p class="card-text"><%= product.description %></p>
+          <h6 class="card-subtitle mb-2 text-muted"> <%= product.price %> &euro;</h6>
+          <p class="card-text"><%= product.itemDescription %></p>
           <% if (user.isAdmin) { %>
-            <button data-deleteId="<%= product.id %>" class="btn btn-danger btn-block">Delete Product</button>
+            <button data-delete_product_id="<%= product.id %>" class="btn btn-danger btn-block">Delete Product</button>
+          <% } else { %>
+            <button" data-product_id="<%= product.id %>" class="btn btn-primary btn-block">Buy this tea</button>
           <% } %>
-          <button" class="btn btn-primary btn-block">Buy this tea</button>
         </div>
       </div>
   <% }) %>
 </div>
-<!-- <script>
+<script>
   window.addEventListener('load', function (e) {
     const scriptElement = document.createElement('script')
     scriptElement.setAttribute('src', 'http://localhost:3000/static/js/products.js')
     scriptElement.setAttribute('type', 'text/javascript')
     document.body.appendChild(scriptElement)
   })
-</script> -->
+</script>
 <% include ../partials/footer %>
   
   

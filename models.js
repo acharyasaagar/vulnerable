@@ -75,16 +75,16 @@ Transaction.init({
     primaryKey: true,
   },
   total: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.STRING,
     allowNull: false
   }
 }, {
   sequelize
 })
 
-Customer.hasMany(Transaction)
-Item.belongsToMany(Transaction,  { through: 'ItemTransaction'})
-Transaction.belongsToMany(Item,  { through: 'ItemTransaction'})
+Transaction.belongsTo(Customer)
+Transaction.belongsTo(Item)
+Item.hasMany(Transaction)
 
 module.exports = {
   sequelize,

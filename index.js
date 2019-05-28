@@ -8,6 +8,7 @@ require('dotenv').config()
 
 const router = require('./router')
 const models = require('./models')
+const { seedCustomers, seedItems } = require('./seed.db')
 
 const { isAuthenticated, isAuthenticatedAsAdmin } = require('./services/customer/authentication.service')
 const { getAllProducts } = require('./services/products/products.service')
@@ -16,8 +17,10 @@ const { sequelize, Customer, Item, Transaction } = models
 
 sequelize
 .authenticate()
-.then(_ => {
-  // sequelize.sync({force: true})
+.then(async _ => {
+  await sequelize.sync({force: true})
+  await seedCustomers()
+  await seedItems()
   console.log(`\nDatabase connected succesfully`)
   app.listen(3000, () => {
     console.log(`\nServer started at port 3000`)
@@ -48,6 +51,11 @@ app.use('/static/products', isAuthenticated, async function(req, res) {
       }).end()
     }
   }
+  return res.send('Internal Server Error')
+})
+
+app.use('/static/invoice', isAuthenticated, async function(req, res) {
+  res.render('invoice', { transaction: req.query })
 })
 
 // app.use('/static/admin', isAuthenticated, function(req, res) {

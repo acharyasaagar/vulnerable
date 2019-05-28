@@ -1,0 +1,24 @@
+<% include ../partials/header %>
+
+<h6 class="text-center my-5">WELCOME <span id="user-email"> <%= transaction.customerEmail %></span></h6>
+<div >
+</div>
+<div class="container">
+  <div class="card text-center">
+    <h4 class="card-header">
+      Invoice
+    </h4>
+    <div class="card-body">
+      <h5 class="card-title">Invoice of Tea Purchase</h5>
+      <p class="card-text text-justify">Hello <b><%= transaction.customerEmail %>!</b> Thank you for purchasig <b><%= transaction.productName %></b> with us. Here is the summary of your purchase.</p>
+      <h6 class="card-subtitle my-2">Item Price: <%= transaction.productPrice %> </h6>
+      <a href="/static/products" class="btn btn-primary my-2">Go to products</a>
+    </div>
+    <div class="card-footer text-muted my-2">
+      <h6>Total Price: <%= transaction.productPrice %></h6>
+    </div>
+  </div>
+</div>
+<% include ../partials/footer %>
+  
+  

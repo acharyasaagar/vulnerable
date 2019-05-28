@@ -1,53 +1,53 @@
 (function(){
-  fetch('http://localhost:3000/products')
-    .then(res => res.json())
-    .then(data => {
-      data.map(product => {
-        const card = renderCard(product.name, product.itemDescription, product.imageURL, product.price)
-        document.getElementById('products').appendChild(card)
+  const buyProductButtonsNodeList = document.querySelectorAll('[data-product_id]')
+  const buyProductButtonsArray = Array.from(buyProductButtonsNodeList)
+
+  const deleteProductButtonsNodeList = document.querySelectorAll('[data-delete_product_id]')
+  const deleteProductButtonsArray = Array.from(deleteProductButtonsNodeList)
+
+  buyProductButtonsArray.forEach(btn => {
+    btn.addEventListener('click', handleProductPurchase)
+  })
+
+  deleteProductButtonsArray.forEach(btn => {
+    btn.addEventListener('click', handleProductDeletion)
+  })
+  function handleProductDeletion(e) {
+    const productId = e.target.dataset.delete_product_id
+    fetch(`/products/${productId}`, {
+      method: 'DELETE'
       })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        if(res.ok) {
+          window.alert('Item deleted successfully!')
+          window.location.reload()
+        } else {
+          throw new Error('Error deleting the item')
+        }
+      })
+      .catch(err => alert(err.message))
+  }
 
-    function renderCard(cardTitle, cardText, imgSrc, price) {
-      const cardDiv = document.createElement('div')
-      cardDiv.setAttribute('class', 'card m-3')
-      cardDiv.setAttribute('style', 'width: 20rem')
-      const img = document.createElement('img')
-      img.setAttribute('src', imgSrc)
-      img.setAttribute('class', 'card-img-top')
-      cardDiv.appendChild(img)
-      const cardBodyDiv = renderCardBody(cardTitle, cardText, price)
-      cardDiv.appendChild(cardBodyDiv)
-      return cardDiv
+  function handleProductPurchase(e) {
+    const productId = e.target.dataset.product_id
+    const customer = document.getElementById('user-email').innerHTML
+    const total = e.target.previousElementSibling.previousElementSibling.innerHTML
+    const postPayload = {
+      productId,
+      customer,
+      total
     }
-
-    function renderCardBody(cardTitle, cardText, price) {
-      const h5 = document.createElement('h5')
-      h5.setAttribute('class', 'card-title')
-      const h5Text = document.createTextNode(cardTitle)
-      h5.appendChild(h5Text)
-      const h6 = document.createElement('h6')
-      const priceText = document.createTextNode(price+' €')
-      h6.appendChild(priceText)
-      h6.setAttribute('class', 'card-subtitle mb-2')
-      const p = document.createElement('p')
-      p.setAttribute('class', 'card-text')
-      const pText = document.createTextNode(cardText)
-      p.appendChild(pText)
-      const a = document.createElement('a')
-      a.setAttribute('href', '#')
-      a.setAttribute('class', 'btn btn-primary btn-block')
-      const btnText = document.createTextNode('Buy')
-      a.appendChild(btnText)
-      const div = document.createElement('div')
-      div.setAttribute('class', 'card-body')
-      div.appendChild(h5)
-      div.appendChild(h6)
-      div.appendChild(p)
-      div.appendChild(a)
-      return div
-    }
+    fetch('http://localhost:3000/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postPayload)
+    })
+    .then(res => {
+      if(res.ok) {
+        window.location.replace(res.url)
+      }
+    })
+  }
 }())

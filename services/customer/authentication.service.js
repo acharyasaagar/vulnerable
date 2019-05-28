@@ -36,7 +36,7 @@ async function authenticateUser(user) {
 }
 
 async function isAuthenticated(req, res, next) {
-  if(!req.cookies.token) return res.status(401).json({ error: 'Unauthorized'}).end()
+  if(!req.cookies.token) return res.status(401).json({ error: 'Unauthorized' }).end()
   const tokenInReq = req.cookies.token
   const userId = tokenInReq.split('.')[0]
   const user = await Customer.findByPk(userId)
@@ -44,6 +44,8 @@ async function isAuthenticated(req, res, next) {
   if(tokenInDb === tokenInReq) {
     req.user = user
     return next()
+  } else {
+    return res.status(401).json({ error: 'Unauthorized' }).end()
   }
 }
 
