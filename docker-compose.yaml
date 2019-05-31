@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    db:
+        image: postgres:latest
+        ports:
+         - "3333:5432" #Remove this remove during remote deployment
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        ports:
+            - "3000:3000"
