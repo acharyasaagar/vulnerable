@@ -1,6 +1,11 @@
 # Vulnerable web application
 
-
+## Project by:
+  ```
+  * Sagar Acharya
+  * Santiago Torres
+  * Hien Le (partialy)
+  ```
 
 ## Requirements
   ```
