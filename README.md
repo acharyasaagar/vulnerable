@@ -49,6 +49,6 @@
 ### 3. Unprotected for deletion:
 
   ```
-  An attacker may gain access to the deletion page by spidering
+  An attacker may gain access to the deletion page by spidering or guessing the url and then will be able to delete items.
   ```
  
