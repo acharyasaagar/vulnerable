@@ -1,9 +1,9 @@
-from node:latest
+FROM node:latest
 
-copy ./ /vulnerable/
+COPY ./ /app/
 
-workdir /vulnerable/
+WORKDIR /app/
 
 RUN npm install
 
-cmd 
+CMD ["npm", "start"]

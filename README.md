@@ -1,33 +1,36 @@
 # Vulnerable web application
 
-### Create a database 'vulnerable' before starting the application.
 
-### Create a .env file at the root of your application and insert following values
+
+## Requirements
+```
+* Docker 18+
+* Docker Compose 1.23+
 
 ```
-  DB_NAME=vulnerable
-  DB_USER=your_database_username
-  DB_PASSWORD=your_db_password
-  DB_HOST=localhost
+## Instructions
+
+### Building
+
+```sh 
+docker-compose pull
+docker-compose build
 ```
 
-## Starting application
-```
-# install dependencies
-npm install
+### Running
 
-```
+* in the foreground:
+  
+  ```sh 
+  docker-compose up
+  ```
 
+### Connect to the app
 
-``` 
-# start the server
-npm start
-
-```
-
-## ACCESS to the project
-
-Project Access is available at http://localhost:3000/static
+  ```sh 
+  Check for the docker container IP.
+  docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+  ```
 
 ## Vulnerabilities
 
